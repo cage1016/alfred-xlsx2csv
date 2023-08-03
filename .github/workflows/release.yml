@@ -23,6 +23,17 @@ jobs:
       - name: Parse Event
         run: |
           echo "tag=$(jq -r '.release.tag_name' "${GITHUB_EVENT_PATH}" | sed s/^v//)" >> $GITHUB_ENV
+      - name: Import Code-Signing Certificates
+        uses: Apple-Actions/import-codesign-certs@v1
+        with:
+          # The certificates in a PKCS12 file encoded as a base64 string
+          p12-file-base64: "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_P12_BASE64 }}"
+          # The password used to import the PKCS12 file.
+          p12-password: "${{ secrets.APPLE_DEVELOPER_CERTIFICATE_PASSWORD }}"
+      - name: Install gon via HomeBrew for code signing and app notarization
+        run: |
+          brew tap mitchellh/gon
+          brew install mitchellh/gon/gon
       - name: Build and pack
         run: |
           # build package
@@ -31,12 +42,43 @@ jobs:
           lipo -create -output .workflow/exe exe_amd64 exe_arm64
           rm  exe_amd64
           rm  exe_arm64
+      - name: code sign and notarize
+        env:
+          AC_USERNAME: "${{ secrets.AC_USERNAME }}"
+          AC_PASSWORD: "${{ secrets.AC_PASSWORD }}"
+        run: |
+          # gon code sign
+          cat <<EOF >> gon.json
+          {
+              "source" : [".workflow/exe"],
+              "bundle_id" : "com.kaichu.xlsx2csv",
+              "sign" :{
+                  "application_identity" : "cage.chung@gmail.com"
+              }
+          }
+          EOF
+          gon -log-level=debug -log-json ./gon.json
 
-          # pack
+          # pack alfredworkflow
           cd .workflow
           plutil -replace version -string "${{ env.tag }}" info.plist
           zip -r ../"ExceltoCSV-${{ env.tag }}.alfredworkflow" .
           cd ..
+
+          # zip alfredworkflow as zip archive for notarize
+          zip -r "ExceltoCSV-${{ env.tag }}.alfredworkflow.zip" "ExceltoCSV-${{ env.tag }}.alfredworkflow"
+
+          # gon notarize
+          cat <<EOF >> notarize.json
+          {
+              "notarize": [{
+                  "path": "${PWD}/ExceltoCSV-${{ env.tag }}.alfredworkflow.zip",
+                  "bundle_id": "com.kaichu.xlsx2csv",
+                  "staple": false
+              }]
+          }
+          EOF
+          gon -log-level=debug -log-json ./notarize.json
 
           echo "artifact=$(echo "ExceltoCSV-${{ env.tag }}.alfredworkflow")" >> $GITHUB_ENV
       - uses: shogo82148/actions-upload-release-asset@v1
