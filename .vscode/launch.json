@@ -1,0 +1,33 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Convert",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/main.go",
+            "args": [
+                "convert",
+                "-i",
+                "0",
+                "/Users/kaichuchung/Library/Mobile Documents/com~apple~CloudDocs/0_KCCHUNG/20-29 Personal, projects/20 personal/20.11 codes/20.11.0045 codes alfred-xlsx2csv/test/example.xlsx"
+            ]
+        },
+        {
+            "name": "List",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "${workspaceFolder}/main.go",
+            "args": [
+                "listSheet",
+                "-f",
+                "/Users/kaichuchung/Library/Mobile Documents/com~apple~CloudDocs/0_KCCHUNG/20-29 Personal, projects/20 personal/20.11 codes/20.11.0045 codes alfred-xlsx2csv/test/example.xlsx"
+            ]
+        }
+    ]
+}
