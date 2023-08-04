@@ -14,6 +14,11 @@ Convert Excel file to CSV file
 ## Features
 
 - Convert Excel file to CSV file
+  - Convert directly if only one sheet in Excel file
+  - Choose sheet if more than one sheet in Excel file
+- Alfred
+  - File Action
+  - File Filter
 
 ## Third Party Libraries
 

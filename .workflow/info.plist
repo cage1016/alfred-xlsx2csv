@@ -553,12 +553,21 @@ Convert Excel file to CSV file
 ## Features
 
 - Convert Excel file to CSV file
+  - Convert directly if only one sheet in Excel file
+  - Choose sheet if more than one sheet in Excel file
+- Alfred
+  - File Action
+  - File Filter
 
 ## Prerequisite
 - Alfred 5
 
 
 ## Change Log
+
+### 0.1.1
+- Add Quicklook support when choose Excel Sheet
+- Update screenshot and README
 
 ### 0.1.0
 - Initial release
@@ -689,7 +698,7 @@ https://github.com/cage1016/alfred-xlsx2csv</string>
 		</dict>
 	</array>
 	<key>version</key>
-	<string>0.1.0</string>
+	<string>0.1.1</string>
 	<key>webaddress</key>
 	<string>https://github.com/cage1016/alfred-xlsx2csv</string>
 </dict>
