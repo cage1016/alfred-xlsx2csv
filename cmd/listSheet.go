@@ -8,6 +8,7 @@ import (
 	"strconv"
 	"strings"
 
+	aw "github.com/deanishe/awgo"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 	"github.com/xuri/excelize/v2"
@@ -29,9 +30,13 @@ func runListSheetCmd(cmd *cobra.Command, args []string) {
 	}
 
 	sheetMap := xlsx.GetSheetMap()
+	wf.Configure(aw.SuppressUIDs(true))
 	for i, sheet := range sheetMap {
 		wf.NewItem(fmt.Sprintf("%d - %s", i, sheet)).
+			Subtitle(fmt.Sprintf("⇧, ↩ Convert sheet '%s' to CSV", sheet)).
 			Arg(strconv.Itoa(i - 1)).
+			UID(strconv.Itoa(i - 1)).
+			Quicklook(file).
 			Valid(true)
 	}
 
