@@ -548,7 +548,15 @@
 
 Convert Excel file to CSV file
 
-![](./demo.png)
+Search Excel file via `xlsx2csv` keyword
+![](1.png)
+
+
+Choose sheet if more than one sheet in Excel file
+![](2.png)
+
+Search File action via `csv` keyword
+![](3.png)
 
 ## Features
 

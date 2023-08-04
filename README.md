@@ -8,8 +8,18 @@ Convert Excel file to CSV file
 [![codecov](https://codecov.io/gh/cage1016/alfred-xlsx2csv/branch/master/graph/badge.svg)](https://codecov.io/gh/cage1016/alfred-xlsx2csv)
 ![](https://img.shields.io/badge/Alfred-5-blueviolet)
 
-![](screenshots/demo.png)
 
+## Usage
+
+Search Excel file via `xlsx2csv` keyword
+![](screenshots/1.png)
+
+
+Choose sheet if more than one sheet in Excel file
+![](screenshots/2.png)
+
+Search File action via `csv` keyword
+![](screenshots/3.png)
 
 ## Features
 
